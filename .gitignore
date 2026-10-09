@@ -1,0 +1,33 @@
+# Never commit downloaded data or working artifacts
+*.docx
+*.doc
+*.pdf
+*.wps
+*.parquet
+*.html
+lists/
+downloads/
+mirrors/
+logs/
+verify/
+work/
+lawlibrary/
+output*/
+*.jsonl
+*_progress*.json
+flk_cookies.json
+.athena_key_cache.json
+content_fallback.json
+aggregateData.json
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

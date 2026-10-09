@@ -1,0 +1,17 @@
+# Core
+requests>=2.28
+python-docx>=1.1
+pycryptodome>=3.19
+
+# Verification / analysis (pyarrow: verify.py cross reads the HF parquet snapshot)
+pandas>=2.0
+pyarrow>=14
+
+# Scanned PDF text extraction & OCR upgrade
+pymupdf>=1.24
+
+# WAF cookie harvesting (optional but recommended)
+# playwright>=1.40  -> then: python -m playwright install chromium
+
+# OCR of scanned official PDFs via MinerU (optional)
+# CLI: npm install -g mineru-open-api ; token via MINERU_TOKEN env
