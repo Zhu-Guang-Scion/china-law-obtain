@@ -65,6 +65,16 @@ python $SKILL/verify.py all                        # verify/ 下四份报告
 python $SKILL/organize_md.py                       # -> lawlibrary/<库>/<类>/原文件|Markdown + 专题/ + manifest.csv
 ```
 
+## 会计准则与执业准则（两库之外的标准文件）
+
+法定两库不收录会计准则/执业准则（属规范性文件）。三套专用下载器（均断点续做）：
+- 企业会计准则体系：`kjs_enum.py`（财政部会计司栏目枚举）+ `kjs_cas_download.py` + `fgk_search.py`（财政部法规库检索）——覆盖基本准则+CAS1-42+解释1-20（截至2026-10最新为第20号）+小企业准则+企业会计制度+应用指南2006（财政部已不提供电子版，用上海市财政局转载的财会〔2006〕18号RAR解包）
+- 政府及行业会计制度：`std_gov_acct.py`——政府会计准则基本+1-11号+解释1-7号+政府会计制度+医院/高校等行业补充+民间非营利/农村集体/合作社/工会/社保基金等制度（45项全）
+- 中注协执业准则：`cicpa_enum.py` + `cicpa_std_download.py` + `cicpa_guide_supp.py`——审计准则45项+鉴证基本+质量管理5101/5102+审阅/其他鉴证/相关服务+应用指南64件+问题解答1-19号（137个官方PDF）
+- 入库转换：`standards_organize.py` → lawlibrary/会计准则与执业准则/<三类>/{原文件,Markdown}/ + manifest.csv
+
+已知边界：收入/租赁/金融工具应用指南单行本仅有纸质版；1612/1613/1632/3101四项应用指南官网未留存附件；职业道德守则与独立性准则属职业道德体系（范围外）；政府会计准则第10号PPP有废止存疑（财政部令114号）已note标注。
+
 ## 乱码/错码复检与修复
 
 全量扫描 `python scripts/mojibake_scan.py`（md 全量；`--docx` 追加 3000 件抽样）+ 修复 `python scripts/moji_fix.py`。检测项与经验：
