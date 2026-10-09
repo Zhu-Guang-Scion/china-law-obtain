@@ -13,13 +13,13 @@
 ## 2. 初始化与推送
 
 ```bash
-cd <本仓库目录 china-law-aque>
+cd <本仓库目录 china-law-obtain>
 git init -b main
 git add -A
 git status   # 确认只有 25 个左右文本文件，无任何 docx/pdf/jsonl
-git commit -m "china-law-aque: full pipeline for acquiring China's current-effective laws & regulations"
+git commit -m "china-law-obtain: full pipeline for acquiring China's current-effective laws & regulations"
 # 在 GitHub 建仓后:
-git remote add origin git@github.com:<user>/china-law-aque.git
+git remote add origin git@github.com:<user>/china-law-obtain.git
 git push -u origin main
 ```
 

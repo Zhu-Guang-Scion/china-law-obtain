@@ -2,7 +2,7 @@
 
 ## What this project is
 
-`china-law-aque` is a set of scripts that **acquire** the current-effective corpus of PRC laws, administrative regulations, supervisory regulations, judicial interpretations, local regulations and government rules from the two official public databases, convert them to a tidy local library (original files + Markdown), and keep that library up to date incrementally.
+`china-law-obtain` is a set of scripts that **acquire** the current-effective corpus of PRC laws, administrative regulations, supervisory regulations, judicial interpretations, local regulations and government rules from the two official public databases, convert them to a tidy local library (original files + Markdown), and keep that library up to date incrementally.
 
 ## What this repository contains
 

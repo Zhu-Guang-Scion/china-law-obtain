@@ -1,10 +1,10 @@
-# china-law-aque
+# china-law-obtain
 
 **Acquire, verify and maintain a local library of all current-effective laws & regulations of mainland China — straight from the two official databases, with mirrors, OCR and four-layer verification.**
 
 中国大陆现行法律法规规章制度库的全流程获取工具：官方库枚举 → 多源下载（官方 API / 公开镜像 / OCR）→ 四层校验 → 分类整理 + Markdown 双格式 + 涉税/涉会计专题 → 增量更新。全部踩坑结论已固化，开箱即用。
 
-> **aque** = *acquire* — 一次配好路径，以后更新法规不再走弯路。
+> **obtain** — 一次配好获取路径，以后更新法规不再走弯路。
 
 ## What it does
 
@@ -20,7 +20,7 @@ End-to-end result on a full build: **27,784 / 27,784 items (100%)**, each with t
 ## Repository layout
 
 ```
-china-law-aque/
+china-law-obtain/
 ├── SKILL.md                 # Full pipeline manual (agent-skill format, also human-readable)
 ├── scripts/                 # 19 standalone Python scripts (resumable, idempotent)
 │   ├── flk_enumerate.py     #   enumerate flk.npc.gov.cn current-effective corpus
@@ -54,7 +54,7 @@ export CHINA_LAW_WORK=/path/to/base/work   # or run from a base dir containing .
 mkdir -p $CHINA_LAW_WORK/{lists,downloads/flk,downloads/gov,logs,verify} \
          $(dirname $CHINA_LAW_WORK)/mirrors
 
-AQ=/path/to/china-law-aque                 # the cloned repo (where scripts/ lives)
+AQ=/path/to/china-law-obtain   # 克隆的仓库(含 scripts/)                 # the cloned repo (where scripts/ lives)
 python $AQ/scripts/flk_enumerate.py        # 1. enumerate national laws DB (~17k items, ~1 min)
 python $AQ/scripts/govlib.py               # 2. enumerate rules library (~10k items)
 python $AQ/scripts/gov_download.py 部门规章 4   # 3. download (resumable)

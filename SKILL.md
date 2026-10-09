@@ -1,9 +1,9 @@
 ---
-name: china-law-aque
-description: 中国大陆现行法律法规规章制度库的获取（aque=acquire）、下载、校验、整理与增量更新全流程工具。覆盖国家法律法规数据库(flk.npc.gov.cn)六类 + 国家规章库(gov.cn)两类，含网宿WAF应对、athenaappkey本地生成、多镜像加速、md转换与涉税/涉会计专题分类。触发词：法律法规下载、法规库更新、flk下载、规章库下载、法规转md、涉税法规、涉会计法规、law library、法规增量更新。
+name: china-law-obtain
+description: 中国大陆现行法律法规规章制度库的获取（obtain）、下载、校验、整理与增量更新全流程工具。覆盖国家法律法规数据库(flk.npc.gov.cn)六类 + 国家规章库(gov.cn)两类，含网宿WAF应对、athenaappkey本地生成、多镜像加速、md转换与涉税/涉会计专题分类。触发词：法律法规下载、法规库更新、flk下载、规章库下载、法规转md、涉税法规、涉会计法规、law library、法规增量更新。
 ---
 
-# china-law-aque — 中国法规库获取与更新全流程
+# china-law-obtain — 中国法规库获取与更新全流程
 
 > 本仓库只含代码与文档，不含任何下载的法规文件（见 docs/RESPONSIBLE_USE.md）。
 > 工作目录约定：脚本通过环境变量 `CHINA_LAW_WORK` 或当前目录下的 `work/` 定位清单/下载/校验产物。
