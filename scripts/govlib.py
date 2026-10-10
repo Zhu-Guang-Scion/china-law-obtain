@@ -18,7 +18,8 @@ from Crypto.Cipher import PKCS1_v1_5
 
 # 以下常量均为 gov.cn 规章库前端公开 JS(index.js) 中的静态常量, 见 docs/RESPONSIBLE_USE.md
 SEARCH_URL = "https://sousuoht.www.gov.cn/athena/forward/BD8730CDDA12515E2D9E1B21AA11C0D6"
-PUBKEY_B64 = (  # 公开前端常量: RSA-1024 公钥"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCWGTHvPbNkzQNxTJwSZbsgHKyLl/OK11kCZNmVVS"
+# 公开前端常量: RSA-1024 公钥（同样取自规章库前端公开 JS）
+PUBKEY_B64 = ("MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCWGTHvPbNkzQNxTJwSZbsgHKyLl/OK11kCZNmVVS"
               "FK3lUbmHgh7Ain1gdaf7G/ETh/wQm/9BAO/U36yWPizzlwHCUcWJXBRsY10PsnYIlBXH/cjqQaEbmE"
               "ghxcjdYtLtkudoMfoMDiJk+tPC7UEZd8TI2u26vttNF++6tHi1HdeQIDAQAB")
 APPID = "f8f49ea85885466598c5261f7f8607fb"  # 公开前端常量: 应用ID
