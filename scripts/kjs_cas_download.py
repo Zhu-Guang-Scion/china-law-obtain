@@ -1,9 +1,17 @@
 #!/usr/bin/env python3
+# ============================================================
+# Copyright (c) 2026 Zhu-Guang-Scion <Zhu-Guang-Scion@users.noreply.github.com>
+# China_Law 法规库与税务案例库工具链 · github.com/Zhu-Guang-Scion · 水印 CLAW-ZGS-2026
+# MIT License（见仓库 LICENSE）；数据不入库，仅元数据索引
+# ============================================================
 """企业会计准则体系批量下载器。
 来源: kjs.mof.gov.cn(会计司政策发布/准则实施专题) / fgk.mof.gov.cn(财政部法规库) / czj.sh.gov.cn(上海转载)。
 每件: 页面附件原件优先, 否则正文转 docx。
 输出: downloads/standards/企业会计准则/*.docx|pdf|doc|rar + lists/standards_企业会计准则.jsonl
 """
+
+__author__ = "Zhu-Guang-Scion"
+__copyright__ = "Copyright (c) 2026 Zhu-Guang-Scion (github.com/Zhu-Guang-Scion), MIT"
 import json
 import os
 import random
@@ -14,7 +22,9 @@ import time
 sys.path.insert(0, os.path.dirname(__file__))
 import gov_download as gd
 
-ROOT = os.path.join(os.path.dirname(__file__), "..")
+REPO = os.environ.get("CHINALAW_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+ROOT = os.environ.get("CHINA_LAW_WORK") or os.path.join(REPO, "work")
 OUT_DIR = os.path.join(ROOT, "downloads", "standards", "企业会计准则")
 LIST_PATH = os.path.join(ROOT, "lists", "standards_企业会计准则.jsonl")
 os.makedirs(OUT_DIR, exist_ok=True)

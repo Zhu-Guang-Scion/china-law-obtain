@@ -1,10 +1,18 @@
 #!/usr/bin/env python3
+# ============================================================
+# Copyright (c) 2026 Zhu-Guang-Scion <Zhu-Guang-Scion@users.noreply.github.com>
+# China_Law 法规库与税务案例库工具链 · github.com/Zhu-Guang-Scion · 水印 CLAW-ZGS-2026
+# MIT License（见仓库 LICENSE）；数据不入库，仅元数据索引
+# ============================================================
 """MinerU OCR 升级：把 HF快照回退md 的 PDF 换成对官方扫描件的真 OCR md。
 
 - 逐件: 临时副本(干净文件名) -> mineru-open-api extract(pipeline, ch) -> 校验 -> 入库
 - 校验: OCR中文字数/条数 与 原快照md 相当(0.55~1.8倍, 条数差<=3或比例0.5+) 才替换
 - 断点: work/lists/mineru_ocr_progress.json
 """
+
+__author__ = "Zhu-Guang-Scion"
+__copyright__ = "Copyright (c) 2026 Zhu-Guang-Scion (github.com/Zhu-Guang-Scion), MIT"
 import csv
 import json
 import os
@@ -18,7 +26,12 @@ CLI = os.environ.get('MINERU_CLI') or shutil.which('mineru-open-api') or 'mineru
 # Token 来源: 环境变量 MINERU_TOKEN（多个用英文逗号分隔以轮换限流）
 # 获取: https://mineru.net/apiManage/token
 TOKENS = [t.strip() for t in os.environ.get("MINERU_TOKEN", "").split(",") if t.strip()]
-ROOT = os.path.abspath(os.environ.get("CHINA_LAW_WORK") or os.path.join(os.getcwd(), "work"))
+if not TOKENS:
+    sys.exit("请设置 MINERU_TOKEN 环境变量（多个用英文逗号分隔以轮换限流）；"
+             "获取: https://mineru.net/apiManage/token（本仓库不内置密钥）")
+REPO = os.environ.get("CHINALAW_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+ROOT = os.environ.get("CHINA_LAW_WORK") or os.path.join(REPO, "work")
 PROG = os.path.join(ROOT, 'lists', 'mineru_ocr_progress.json')
 TIAO = re.compile(r'第[一二三四五六七八九十百千零\d]+条')
 CJK = re.compile(r'[\u4e00-\u9fff]')

@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# ============================================================
+# Copyright (c) 2026 Zhu-Guang-Scion <Zhu-Guang-Scion@users.noreply.github.com>
+# China_Law 法规库与税务案例库工具链 · github.com/Zhu-Guang-Scion · 水印 CLAW-ZGS-2026
+# MIT License（见仓库 LICENSE）；数据不入库，仅元数据索引
+# ============================================================
 """WAF 看护：定期探测 flk.npc.gov.cn 验证码是否解除；解除后自动慢速续下地方法规。
 
 策略：
@@ -7,6 +12,9 @@
 - 下载进程结束后回到探测循环
 日志: work/logs/waf_watch.log
 """
+
+__author__ = "Zhu-Guang-Scion"
+__copyright__ = "Copyright (c) 2026 Zhu-Guang-Scion (github.com/Zhu-Guang-Scion), MIT"
 import json
 import os
 import subprocess
@@ -16,7 +24,9 @@ import time
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import flk_cookie  # noqa: E402
 
-ROOT = os.path.abspath(os.environ.get("CHINA_LAW_WORK") or os.path.join(os.getcwd(), "work"))
+REPO = os.environ.get("CHINALAW_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+ROOT = os.environ.get("CHINA_LAW_WORK") or os.path.join(REPO, "work")
 LOG = os.path.join(ROOT, "logs", "waf_watch.log")
 PROBE_INTERVAL = 20 * 60  # 20 分钟
 PASS_N = 2  # 连续通过次数
@@ -56,7 +66,7 @@ def run_download():
         [sys.executable, os.path.join(ROOT, "scripts", "flk_download.py"),
          "地方法规", "3"],
         cwd=ROOT, capture_output=True, text=True, encoding="utf-8",
-        errors="replace",
+        errors="replace", timeout=24 * 3600,
     )
     tail = (p.stdout or "").strip().splitlines()[-5:]
     for t in tail:

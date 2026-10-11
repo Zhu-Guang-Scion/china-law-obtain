@@ -1,10 +1,18 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# ============================================================
+# Copyright (c) 2026 Zhu-Guang-Scion <Zhu-Guang-Scion@users.noreply.github.com>
+# China_Law 法规库与税务案例库工具链 · github.com/Zhu-Guang-Scion · 水印 CLAW-ZGS-2026
+# MIT License（见仓库 LICENSE）；数据不入库，仅元数据索引
+# ============================================================
 """政府会计准则及非营利/行业会计制度 批量下载器（财政部官网/会计司）。
 
 用法: python std_gov_acct.py [keys...]   # 无参数=全部
 产物: downloads/standards/政府及行业会计制度/<文件> + lists/standards_政府及行业会计制度.jsonl
 """
+
+__author__ = "Zhu-Guang-Scion"
+__copyright__ = "Copyright (c) 2026 Zhu-Guang-Scion (github.com/Zhu-Guang-Scion), MIT"
 import html as htmllib
 import json
 import os
@@ -18,7 +26,9 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import gov_download as gd
 from gov_download import sanitize, make_session, extract_body, extract_body_generic, body_to_blocks, make_docx, _STYLE_SCRIPT_RE
 
-ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+REPO = os.environ.get("CHINALAW_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+ROOT = os.environ.get("CHINA_LAW_WORK") or os.path.join(REPO, "work")
 OUT_DIR = os.path.join(ROOT, "downloads", "standards", "政府及行业会计制度")
 LIST_PATH = os.path.join(ROOT, "lists", "standards_政府及行业会计制度.jsonl")
 PROG_PATH = os.path.join(ROOT, "lists", "standards_dl_progress_政府及行业会计制度.jsonl")

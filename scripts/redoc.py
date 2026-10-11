@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
+# ============================================================
+# Copyright (c) 2026 Zhu-Guang-Scion <Zhu-Guang-Scion@users.noreply.github.com>
+# China_Law 法规库与税务案例库工具链 · github.com/Zhu-Guang-Scion · 水印 CLAW-ZGS-2026
+# MIT License（见仓库 LICENSE）；数据不入库，仅元数据索引
+# ============================================================
 """一次性：把 .doc 老格式文件经 flk 官方 API 重取为 docx（用 cookie 池）。"""
+
+__author__ = "Zhu-Guang-Scion"
+__copyright__ = "Copyright (c) 2026 Zhu-Guang-Scion (github.com/Zhu-Guang-Scion), MIT"
 import glob
 import json
 import os
@@ -9,12 +17,17 @@ import time
 
 import requests
 
-ROOT = os.environ.get("CHINA_LAW_WORK") or os.path.join(os.getcwd(), "work")
+REPO = os.environ.get("CHINALAW_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+ROOT = os.environ.get("CHINA_LAW_WORK") or os.path.join(REPO, "work")
 BASE = "https://flk.npc.gov.cn"
 
 
 def load_cookie_session():
-    d = json.load(open(os.path.join(ROOT, "lists", "flk_cookies.json"), encoding="utf-8"))
+    ck = os.path.join(ROOT, "lists", "flk_cookies.json")
+    if not os.path.exists(ck):
+        sys.exit("未找到会话 cookie 文件 %s\n请先运行: python scripts/flk_cookie.py" % ck)
+    d = json.load(open(ck, encoding="utf-8"))
     s = requests.Session()
     s.headers.update({
         "User-Agent": d.get("ua") or "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/131",

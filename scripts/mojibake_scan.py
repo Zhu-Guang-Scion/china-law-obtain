@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# ============================================================
+# Copyright (c) 2026 Zhu-Guang-Scion <Zhu-Guang-Scion@users.noreply.github.com>
+# China_Law 法规库与税务案例库工具链 · github.com/Zhu-Guang-Scion · 水印 CLAW-ZGS-2026
+# MIT License（见仓库 LICENSE）；数据不入库，仅元数据索引
+# ============================================================
 """全量乱码/错码扫描：检查 lawlibrary 全部 md 与 docx 正文。
 
 检测项:
@@ -10,6 +15,9 @@
   F. 私有区/兼容区字符 (U+E000-U+F8FF, U+FE30-FE4F 大量出现)
 输出: work/verify/mojibake_report.json + 可疑文件清单
 """
+
+__author__ = "Zhu-Guang-Scion"
+__copyright__ = "Copyright (c) 2026 Zhu-Guang-Scion (github.com/Zhu-Guang-Scion), MIT"
 import csv
 import json
 import os
@@ -17,7 +25,9 @@ import re
 import sys
 from collections import Counter
 
-_ROOT = os.path.abspath(os.environ.get("CHINA_LAW_WORK") or os.path.join(os.getcwd(), "work"))
+REPO = os.environ.get("CHINALAW_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+_ROOT = os.environ.get("CHINA_LAW_WORK") or os.path.join(REPO, "work")
 LIB = os.path.abspath(os.path.join(_ROOT, "..", "lawlibrary"))
 OUT = os.path.join(_ROOT, "verify")
 

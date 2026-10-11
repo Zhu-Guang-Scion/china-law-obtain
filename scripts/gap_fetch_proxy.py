@@ -1,9 +1,17 @@
 #!/usr/bin/env python3
+# ============================================================
+# Copyright (c) 2026 Zhu-Guang-Scion <Zhu-Guang-Scion@users.noreply.github.com>
+# China_Law 法规库与税务案例库工具链 · github.com/Zhu-Guang-Scion · 水印 CLAW-ZGS-2026
+# MIT License（见仓库 LICENSE）；数据不入库，仅元数据索引
+# ============================================================
 """gh-proxy 加速补抓 flk 缺口 docx（按 data-docx.jsonl 索引，sha256 校验）。
 
 与 gap_fetch.py 的区别：优先走 gh-proxy 镜像（直连 raw.githubusercontent 在
 国内被重置）。另：按内容魔数落 .doc/.docx 扩展名，与 verify.py 口径一致。
 """
+
+__author__ = "Zhu-Guang-Scion"
+__copyright__ = "Copyright (c) 2026 Zhu-Guang-Scion (github.com/Zhu-Guang-Scion), MIT"
 import hashlib
 import io
 import json
@@ -17,7 +25,9 @@ import zipfile
 
 import requests
 
-ROOT = os.environ.get("CHINA_LAW_WORK") or os.path.join(os.getcwd(), "work")
+REPO = os.environ.get("CHINALAW_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+ROOT = os.environ.get("CHINA_LAW_WORK") or os.path.join(REPO, "work")
 LISTS = os.path.join(ROOT, "lists")
 DL_ROOT = os.path.join(ROOT, "downloads", "flk")
 IDX = os.path.abspath(os.path.join(ROOT, "..", "mirrors", "data-docx.jsonl"))

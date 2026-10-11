@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
+# ============================================================
+# Copyright (c) 2026 Zhu-Guang-Scion <Zhu-Guang-Scion@users.noreply.github.com>
+# China_Law 法规库与税务案例库工具链 · github.com/Zhu-Guang-Scion · 水印 CLAW-ZGS-2026
+# MIT License（见仓库 LICENSE）；数据不入库，仅元数据索引
+# ============================================================
 """补充下载仍现行有效的早期批次应用指南（2017批3项 + 2019批4项），并登记不可得项。"""
+__author__ = "Zhu-Guang-Scion"
+__copyright__ = "Copyright (c) 2026 Zhu-Guang-Scion (github.com/Zhu-Guang-Scion), MIT"
 import json
 import os
 import random
@@ -10,8 +17,13 @@ import time
 sys.path.insert(0, os.path.dirname(__file__))
 import gov_download as gd
 
-OUT_DIR = r"E:\ai_coding_xiangmu\China_Law\work\downloads\standards\执业准则"
-LIST_OUT = r"E:\ai_coding_xiangmu\China_Law\work\lists\standards_执业准则.jsonl"
+# 可移植化（审查修复）：支持 CHINALAW_ROOT 环境变量
+REPO = os.environ.get(
+    "CHINALAW_ROOT",
+    os.path.normpath(os.path.dirname(
+        os.path.dirname(os.path.abspath(__file__)))))
+OUT_DIR = os.path.join(REPO, "work", "downloads", "standards", "执业准则")
+LIST_OUT = os.path.join(REPO, "work", "lists", "standards_执业准则.jsonl")
 
 B2017 = "https://www.cicpa.org.cn/ztzl1/Professional_standards/Professional_guidelines/yifabu/201703/t20170320_60608.html"
 B2019 = "https://www.cicpa.org.cn/ztzl1/Professional_standards/Professional_guidelines/yifabu/201904/t20190410_60613.html"

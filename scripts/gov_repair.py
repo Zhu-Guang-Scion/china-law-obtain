@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# ============================================================
+# Copyright (c) 2026 Zhu-Guang-Scion <Zhu-Guang-Scion@users.noreply.github.com>
+# China_Law 法规库与税务案例库工具链 · github.com/Zhu-Guang-Scion · 水印 CLAW-ZGS-2026
+# MIT License（见仓库 LICENSE）；数据不入库，仅元数据索引
+# ============================================================
 """规章库下载修复：扫描内容过薄的 docx，重提取(剥离style/script)或下载附件。
 
 判定薄内容: docx 全文 < 500 中文字符 且 第X条 数 < 2
@@ -6,6 +11,9 @@
   1) 用已存 HTML 重新提取（新提取器剥离 style/script，可修 CSS 误匹配）
   2) 若仍薄：找页面附件链接(pdf/doc/docx/wps)，下载为 <名>_附件.<ext>，docx 保留为元数据存根并注明
 """
+
+__author__ = "Zhu-Guang-Scion"
+__copyright__ = "Copyright (c) 2026 Zhu-Guang-Scion (github.com/Zhu-Guang-Scion), MIT"
 import glob
 import json
 import os
@@ -20,7 +28,9 @@ import requests
 sys.path.insert(0, os.path.dirname(__file__))
 import gov_download as gd
 
-ROOT = os.environ.get("CHINA_LAW_WORK") or os.path.join(os.getcwd(), "work")
+REPO = os.environ.get("CHINALAW_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+ROOT = os.environ.get("CHINA_LAW_WORK") or os.path.join(REPO, "work")
 LISTS = os.path.join(ROOT, "lists")
 GOV_DL = os.path.join(ROOT, "downloads", "gov")
 TIAO_RE = re.compile(r"第[一二三四五六七八九十百千零\d]+条")

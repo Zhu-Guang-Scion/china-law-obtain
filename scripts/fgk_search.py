@@ -1,10 +1,19 @@
 #!/usr/bin/env python3
+# ============================================================
+# Copyright (c) 2026 Zhu-Guang-Scion <Zhu-Guang-Scion@users.noreply.github.com>
+# China_Law 法规库与税务案例库工具链 · github.com/Zhu-Guang-Scion · 水印 CLAW-ZGS-2026
+# MIT License（见仓库 LICENSE）；数据不入库，仅元数据索引
+# ============================================================
 """财政法规管理系统 fgk.mof.gov.cn 检索工具。"""
+__author__ = "Zhu-Guang-Scion"
+__copyright__ = "Copyright (c) 2026 Zhu-Guang-Scion (github.com/Zhu-Guang-Scion), MIT"
 import json
+import os
 import sys
 import time
 
-sys.path.insert(0, r'E:\ai_coding_xiangmu\China_Law\work\scripts')
+# 可移植化（审查修复）：sys.path 按本文件位置动态定位
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import gov_download as gd
 
 SEARCH = 'http://fgk.mof.gov.cn/dev/lawFile/searchLawFile'

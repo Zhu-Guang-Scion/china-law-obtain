@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
+# ============================================================
+# Copyright (c) 2026 Zhu-Guang-Scion <Zhu-Guang-Scion@users.noreply.github.com>
+# China_Law 法规库与税务案例库工具链 · github.com/Zhu-Guang-Scion · 水印 CLAW-ZGS-2026
+# MIT License（见仓库 LICENSE）；数据不入库，仅元数据索引
+# ============================================================
 """枚举财政部会计司 kjs.mof.gov.cn 栏目列表页，产出 jsonl 索引。"""
+
+__author__ = "Zhu-Guang-Scion"
+__copyright__ = "Copyright (c) 2026 Zhu-Guang-Scion (github.com/Zhu-Guang-Scion), MIT"
 import json
 import os
 import re
@@ -9,7 +17,9 @@ import time
 sys.path.insert(0, os.path.dirname(__file__))
 import gov_download as gd
 
-ROOT = os.path.join(os.path.dirname(__file__), "..")
+REPO = os.environ.get("CHINALAW_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+ROOT = os.environ.get("CHINA_LAW_WORK") or os.path.join(REPO, "work")
 OUT = os.path.join(ROOT, "lists", "kjs_zhengcefabu.jsonl")
 
 LINK_RE = re.compile(

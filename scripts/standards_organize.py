@@ -1,9 +1,17 @@
 #!/usr/bin/env python3
+# ============================================================
+# Copyright (c) 2026 Zhu-Guang-Scion <Zhu-Guang-Scion@users.noreply.github.com>
+# China_Law 法规库与税务案例库工具链 · github.com/Zhu-Guang-Scion · 水印 CLAW-ZGS-2026
+# MIT License（见仓库 LICENSE）；数据不入库，仅元数据索引
+# ============================================================
 """会计准则与执业准则：整理 + md 转换 + manifest。
 
 输入: work/lists/standards_<子集>.jsonl (子代理产出) + work/downloads/standards/<子集>/
 输出: lawlibrary/会计准则与执业准则/<子集>/{原文件,Markdown}/ + manifest.csv
 """
+
+__author__ = "Zhu-Guang-Scion"
+__copyright__ = "Copyright (c) 2026 Zhu-Guang-Scion (github.com/Zhu-Guang-Scion), MIT"
 import csv
 import glob
 import json
@@ -16,7 +24,9 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from organize_md import to_md, md_doc  # noqa: E402
 from xmlfallback import docx_xml_fallback  # noqa: E402
 
-ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+REPO = os.environ.get("CHINALAW_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+ROOT = os.environ.get("CHINA_LAW_WORK") or os.path.join(REPO, "work")
 LISTS = os.path.join(ROOT, "lists")
 STD = os.path.join(ROOT, "downloads", "standards")
 LIB = os.path.abspath(os.path.join(ROOT, "..", "lawlibrary", "会计准则与执业准则"))

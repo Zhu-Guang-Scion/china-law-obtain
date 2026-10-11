@@ -1,9 +1,17 @@
 #!/usr/bin/env python3
+# ============================================================
+# Copyright (c) 2026 Zhu-Guang-Scion <Zhu-Guang-Scion@users.noreply.github.com>
+# China_Law 法规库与税务案例库工具链 · github.com/Zhu-Guang-Scion · 水印 CLAW-ZGS-2026
+# MIT License（见仓库 LICENSE）；数据不入库，仅元数据索引
+# ============================================================
 """通过 gh-proxy 加速镜像把 lawtext_md 来源的地方法规升级为官方 docx（sha256 校验）。
 
 多线程 + 断点：升级记录 append 到 flk_dl_progress_地方法规.jsonl (source=lawtext, upgraded_from=lawtext_md)
 跳过已升级（最新记录 source != lawtext_md 视为已处理）。
 """
+
+__author__ = "Zhu-Guang-Scion"
+__copyright__ = "Copyright (c) 2026 Zhu-Guang-Scion (github.com/Zhu-Guang-Scion), MIT"
 import hashlib
 import json
 import os
@@ -15,7 +23,9 @@ import time
 
 import requests
 
-ROOT = os.environ.get("CHINA_LAW_WORK") or os.path.join(os.getcwd(), "work")
+REPO = os.environ.get("CHINALAW_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+ROOT = os.environ.get("CHINA_LAW_WORK") or os.path.join(REPO, "work")
 LISTS = os.path.join(ROOT, "lists")
 DL_ROOT = os.path.join(ROOT, "downloads", "flk")
 IDX = os.path.abspath(os.path.join(ROOT, "..", "mirrors", "data-docx.jsonl"))

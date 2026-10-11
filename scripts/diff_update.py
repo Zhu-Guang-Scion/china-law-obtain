@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# ============================================================
+# Copyright (c) 2026 Zhu-Guang-Scion <Zhu-Guang-Scion@users.noreply.github.com>
+# China_Law 法规库与税务案例库工具链 · github.com/Zhu-Guang-Scion · 水印 CLAW-ZGS-2026
+# MIT License（见仓库 LICENSE）；数据不入库，仅元数据索引
+# ============================================================
 """增量更新 diff：对比新旧清单，输出 新增/消失/变更 件列表。
 
 用法:
@@ -9,6 +14,9 @@
 - removed.jsonl 旧清单有、新清单无（可能废止/被新版替换，人工核查）
 - changed.jsonl 同键但 标题/公布日期/时效 变化
 """
+
+__author__ = "Zhu-Guang-Scion"
+__copyright__ = "Copyright (c) 2026 Zhu-Guang-Scion (github.com/Zhu-Guang-Scion), MIT"
 import json
 import os
 import sys

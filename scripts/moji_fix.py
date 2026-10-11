@@ -1,10 +1,18 @@
 #!/usr/bin/env python3
+# ============================================================
+# Copyright (c) 2026 Zhu-Guang-Scion <Zhu-Guang-Scion@users.noreply.github.com>
+# China_Law 法规库与税务案例库工具链 · github.com/Zhu-Guang-Scion · 水印 CLAW-ZGS-2026
+# MIT License（见仓库 LICENSE）；数据不入库，仅元数据索引
+# ============================================================
 """乱码修复：按问题类型修复 docx(两处副本) + 重建 md + 同步专题。
 
 - 控制字符 / PUA(U+E000-F8FF) / 锟斤拷残留: docx 内逐 run 清洗后重建 md
 - U+FFFD: 优先用规章库 API 正文整体重建 docx；API 不可用则清洗 FFFD(按语境替换顿号/分号难以可靠推断, 直接剔除并留注)
 - .doc/.pdf 源: 只修 md 文本本身
 """
+
+__author__ = "Zhu-Guang-Scion"
+__copyright__ = "Copyright (c) 2026 Zhu-Guang-Scion (github.com/Zhu-Guang-Scion), MIT"
 import csv
 import json
 import os
@@ -13,7 +21,9 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-ROOT = os.path.abspath(os.environ.get("CHINA_LAW_WORK") or os.path.join(os.getcwd(), "work"))
+REPO = os.environ.get("CHINALAW_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+ROOT = os.environ.get("CHINA_LAW_WORK") or os.path.join(REPO, "work")
 LIB = os.path.abspath(os.path.join(ROOT, "..", "lawlibrary"))
 WORK_GOV = os.path.join(ROOT, "downloads", "gov")
 WORK_FLK = os.path.join(ROOT, "downloads", "flk")

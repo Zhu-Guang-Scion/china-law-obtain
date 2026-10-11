@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# ============================================================
+# Copyright (c) 2026 Zhu-Guang-Scion <Zhu-Guang-Scion@users.noreply.github.com>
+# China_Law 法规库与税务案例库工具链 · github.com/Zhu-Guang-Scion · 水印 CLAW-ZGS-2026
+# MIT License（见仓库 LICENSE）；数据不入库，仅元数据索引
+# ============================================================
 """校验套件：数量对账 + 文件完整性 + 抽样内容校验 + 镜像交叉核验。
 
 用法:
@@ -9,6 +14,9 @@
   python verify.py manifest    # 生成最终 manifest (csv + json, 含sha256)
   python verify.py all
 """
+
+__author__ = "Zhu-Guang-Scion"
+__copyright__ = "Copyright (c) 2026 Zhu-Guang-Scion (github.com/Zhu-Guang-Scion), MIT"
 import csv
 import glob
 import hashlib
@@ -21,7 +29,9 @@ import sys
 import zipfile
 from collections import Counter
 
-ROOT = os.environ.get("CHINA_LAW_WORK") or os.path.join(os.getcwd(), "work")
+REPO = os.environ.get("CHINALAW_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+ROOT = os.environ.get("CHINA_LAW_WORK") or os.path.join(REPO, "work")
 LISTS = os.path.join(ROOT, "lists")
 FLK_DL = os.path.join(ROOT, "downloads", "flk")
 GOV_DL = os.path.join(ROOT, "downloads", "gov")

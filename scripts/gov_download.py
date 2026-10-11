@@ -1,9 +1,17 @@
 #!/usr/bin/env python3
+# ============================================================
+# Copyright (c) 2026 Zhu-Guang-Scion <Zhu-Guang-Scion@users.noreply.github.com>
+# China_Law 法规库与税务案例库工具链 · github.com/Zhu-Guang-Scion · 水印 CLAW-ZGS-2026
+# MIT License（见仓库 LICENSE）；数据不入库，仅元数据索引
+# ============================================================
 """国家规章库(gov.cn) 批量下载器：抓取详情页 HTML，提取正文，转 docx，另存原始 HTML。
 
 用法: python gov_download.py <部门规章|地方政府规章|all> [workers]
 断点续下：work/lists/gov_dl_progress_<cat>.jsonl (url -> 状态)
 """
+
+__author__ = "Zhu-Guang-Scion"
+__copyright__ = "Copyright (c) 2026 Zhu-Guang-Scion (github.com/Zhu-Guang-Scion), MIT"
 import html as htmllib
 import json
 import os
@@ -19,7 +27,9 @@ from docx import Document
 sys.path.insert(0, os.path.dirname(__file__))
 import govlib
 
-ROOT = os.environ.get("CHINA_LAW_WORK") or os.path.join(os.getcwd(), "work")
+REPO = os.environ.get("CHINALAW_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+ROOT = os.environ.get("CHINA_LAW_WORK") or os.path.join(REPO, "work")
 LISTS = os.path.join(ROOT, "lists")
 DL_ROOT = os.path.join(ROOT, "downloads", "gov")
 

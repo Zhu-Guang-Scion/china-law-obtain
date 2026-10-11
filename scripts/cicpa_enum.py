@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
+# ============================================================
+# Copyright (c) 2026 Zhu-Guang-Scion <Zhu-Guang-Scion@users.noreply.github.com>
+# China_Law 法规库与税务案例库工具链 · github.com/Zhu-Guang-Scion · 水印 CLAW-ZGS-2026
+# MIT License（见仓库 LICENSE）；数据不入库，仅元数据索引
+# ============================================================
 """枚举中注协现行执业准则体系各子栏目（含分页），输出 JSONL 清单。"""
+__author__ = "Zhu-Guang-Scion"
+__copyright__ = "Copyright (c) 2026 Zhu-Guang-Scion (github.com/Zhu-Guang-Scion), MIT"
 import json
 import os
 import re
@@ -19,7 +26,12 @@ SECTIONS = {
     "yyzn": "应用指南",
     "wtjd": "问题解答",
 }
-OUT = r"E:\ai_coding_xiangmu\China_Law\work\lists\cicpa_enum_raw.jsonl"
+# 可移植化（审查修复）：支持 CHINALAW_ROOT 环境变量
+REPO = os.environ.get(
+    "CHINALAW_ROOT",
+    os.path.normpath(os.path.dirname(
+        os.path.dirname(os.path.abspath(__file__)))))
+OUT = os.path.join(REPO, "work", "lists", "cicpa_enum_raw.jsonl")
 
 ITEM_RE = re.compile(
     r'<li><img[^>]*/><a\s+href="([^"]+)"[^>]*title="([^"]*)"', re.S)

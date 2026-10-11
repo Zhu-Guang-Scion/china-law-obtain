@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# ============================================================
+# Copyright (c) 2026 Zhu-Guang-Scion <Zhu-Guang-Scion@users.noreply.github.com>
+# China_Law 法规库与税务案例库工具链 · github.com/Zhu-Guang-Scion · 水印 CLAW-ZGS-2026
+# MIT License（见仓库 LICENSE）；数据不入库，仅元数据索引
+# ============================================================
 """用 playwright headless chromium 访问 flk.npc.gov.cn，收集 WAF(wzws) cookie。
 
 用法:
@@ -6,6 +11,9 @@
   python flk_cookie.py --test     # 刷新后立即用 requests 验证 download/pc 返回 JSON
   python flk_cookie.py --check    # 只检查现有 cookie 是否有效(不刷新)
 """
+
+__author__ = "Zhu-Guang-Scion"
+__copyright__ = "Copyright (c) 2026 Zhu-Guang-Scion (github.com/Zhu-Guang-Scion), MIT"
 import json
 import os
 import sys
@@ -14,7 +22,9 @@ import time
 import requests
 
 BASE = "https://flk.npc.gov.cn"
-ROOT = os.environ.get("CHINA_LAW_WORK") or os.path.join(os.getcwd(), "work")
+REPO = os.environ.get("CHINALAW_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+ROOT = os.environ.get("CHINA_LAW_WORK") or os.path.join(REPO, "work")
 COOKIE_PATH = os.path.abspath(os.path.join(ROOT, "lists", "flk_cookies.json"))
 FRESH_SECONDS = 30 * 60  # 30 分钟内视为新鲜
 

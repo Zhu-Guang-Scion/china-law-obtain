@@ -6,7 +6,7 @@ description: 中国大陆现行法律法规规章制度库的获取（obtain）�
 # china-law-obtain — 中国法规库获取与更新全流程
 
 > 本仓库只含代码与文档，不含任何下载的法规文件（见 docs/RESPONSIBLE_USE.md）。
-> 工作目录约定：脚本通过环境变量 `CHINA_LAW_WORK` 或当前目录下的 `work/` 定位清单/下载/校验产物。
+> 路径约定：脚本相对自身位置定位仓库根，可用环境变量 `CHINALAW_ROOT` 覆盖；work 目录（清单/下载/校验产物）默认 `<仓库根>/work/`，可用 `CHINA_LAW_WORK` 覆盖。
 
 2026-10 实战验证的全量获取路径（28,000+ 件现行有效法规规章，含官方 docx 与 markdown 双格式）。
 所有踩坑结论已固化在脚本里，**不要重新发明轮子，直接按下文流程走**。
@@ -75,6 +75,19 @@ python $SKILL/organize_md.py                       # -> lawlibrary/<库>/<类>/�
 
 已知边界：收入/租赁/金融工具应用指南单行本仅有纸质版；1612/1613/1632/3101四项应用指南官网未留存附件；职业道德守则与独立性准则属职业道德体系（范围外）；政府会计准则第10号PPP有废止存疑（财政部令114号）已note标注。
 
+## 目录索引（build_catalog.py）
+
+对整个 `lawlibrary/`（含准则、税务案例）生成多维只读索引，输出到平级的 `法规目录索引/`：
+
+```bash
+python $SKILL/build_catalog.py   # 约1分钟；库内容更新后重跑即可
+```
+
+- 六个维度：法源层级 / 法律部门（立法法七大部门，官方分类码）/ 主题领域（25 主题多标签，**会计审计与财务**、**税务与税收**为旗舰专题含细分子类）/ 地域（31 省级，官方制定机关码）/ 发文机关 / 年份
+- `索引总表.csv`：每行一个文件（标题/层级/部门/主题/子类/地域/机关/日期/文号/md路径/链接）
+- 输入依赖：lawlibrary 三份 manifest + `work/lists/flk_*.jsonl` + `work/lists/enumData.json`（官方分类树，`POST https://flk.npc.gov.cn/law-search/search/enumData` 获取，需会话 cookie）
+- 磁盘全量对账：md 文件与索引 0 遗漏 0 幽灵；清单外文件自动按目录/文件名补录
+
 ## 乱码/错码复检与修复
 
 全量扫描 `python scripts/mojibake_scan.py`（md 全量；`--docx` 追加 3000 件抽样）+ 修复 `python scripts/moji_fix.py`。检测项与经验：
@@ -97,7 +110,7 @@ flk 有少量扫描版 PDF（无文本层，pymupdf 抽不出字）。三层策�
 
 ## 辅助工具
 
-- `waf_watch.py`：长跑下载时看护 WAF 状态、自动续传
+- `waf_watch.py`：长跑下载时看护 WAF 状态、自动续传（子进程 24h 超时保护）
 - `diff_update.py <旧lists> <新lists> [输出]`：增量对账（新增/消失/变更）
 
 ## 增量更新流程（后续维护）

@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# ============================================================
+# Copyright (c) 2026 Zhu-Guang-Scion <Zhu-Guang-Scion@users.noreply.github.com>
+# China_Law 法规库与税务案例库工具链 · github.com/Zhu-Guang-Scion · 水印 CLAW-ZGS-2026
+# MIT License（见仓库 LICENSE）；数据不入库，仅元数据索引
+# ============================================================
 """用 lawtext/regulations md（bbbs 命名）转 docx 补齐地方法规缺口。
 
 - 只处理 flk_地方法规.jsonl 中 sxx=3 且尚未 ok 的条目
@@ -6,6 +11,9 @@
 - 输出命名与官方下载一致, 进度记 source=lawtext_md
 - 之后可用 mirror_fill/官方下载升级覆盖（upgrade 逻辑见文件尾注释）
 """
+
+__author__ = "Zhu-Guang-Scion"
+__copyright__ = "Copyright (c) 2026 Zhu-Guang-Scion (github.com/Zhu-Guang-Scion), MIT"
 import glob
 import json
 import os
@@ -15,7 +23,9 @@ import sys
 sys.path.insert(0, os.path.dirname(__file__))
 from docx import Document
 
-ROOT = os.environ.get("CHINA_LAW_WORK") or os.path.join(os.getcwd(), "work")
+REPO = os.environ.get("CHINALAW_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+ROOT = os.environ.get("CHINA_LAW_WORK") or os.path.join(REPO, "work")
 LISTS = os.path.join(ROOT, "lists")
 DL_ROOT = os.path.join(ROOT, "downloads", "flk")
 MIRRORS = os.path.abspath(os.path.join(ROOT, "..", "mirrors"))

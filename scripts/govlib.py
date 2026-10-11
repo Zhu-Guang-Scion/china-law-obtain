@@ -1,8 +1,16 @@
 #!/usr/bin/env python3
+# ============================================================
+# Copyright (c) 2026 Zhu-Guang-Scion <Zhu-Guang-Scion@users.noreply.github.com>
+# China_Law 法规库与税务案例库工具链 · github.com/Zhu-Guang-Scion · 水印 CLAW-ZGS-2026
+# MIT License（见仓库 LICENSE）；数据不入库，仅元数据索引
+# ============================================================
 """国家规章库(gov.cn) 工具：athenaappkey 本地生成 + 全量枚举 + HTML 抓取下载。
 
 athenaappkey = urlEncode(base64(RSA_PKCS1v15_encrypt(PUBKEY, APPID)))  —— 从规章库前端 index.js 逆向，静态可复现。
 """
+
+__author__ = "Zhu-Guang-Scion"
+__copyright__ = "Copyright (c) 2026 Zhu-Guang-Scion (github.com/Zhu-Guang-Scion), MIT"
 import base64
 import json
 import os
@@ -160,7 +168,10 @@ def enumerate_all(reg_type, out_path, size=100, delay=0.6):
 
 
 if __name__ == "__main__":
-    out_dir = os.path.join(os.environ.get("CHINA_LAW_WORK") or os.path.join(os.getcwd(), "work"), "lists")
+    out_dir = os.path.join(
+        os.environ.get("CHINA_LAW_WORK")
+        or os.path.join(os.environ.get("CHINALAW_ROOT") or os.path.abspath(
+            os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")), "work"), "lists")
     os.makedirs(out_dir, exist_ok=True)
     for rt in ["部门规章", "地方政府规章"]:
         enumerate_all(rt, os.path.join(out_dir, f"gov_{rt}.jsonl"))

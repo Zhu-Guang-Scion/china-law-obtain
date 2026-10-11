@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
+# ============================================================
+# Copyright (c) 2026 Zhu-Guang-Scion <Zhu-Guang-Scion@users.noreply.github.com>
+# China_Law 法规库与税务案例库工具链 · github.com/Zhu-Guang-Scion · 水印 CLAW-ZGS-2026
+# MIT License（见仓库 LICENSE）；数据不入库，仅元数据索引
+# ============================================================
 """枚举 flk.npc.gov.cn 全部现行有效(sxx=3)法规清单，按大类保存 JSONL。"""
+
+__author__ = "Zhu-Guang-Scion"
+__copyright__ = "Copyright (c) 2026 Zhu-Guang-Scion (github.com/Zhu-Guang-Scion), MIT"
 import json
 import os
 import random
@@ -9,7 +17,9 @@ import time
 import requests
 
 BASE = "https://flk.npc.gov.cn"
-OUT_DIR = os.path.join(os.environ.get("CHINA_LAW_WORK") or os.path.join(os.getcwd(), "work"), "lists")
+REPO = os.environ.get("CHINALAW_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+OUT_DIR = os.path.join(os.environ.get("CHINA_LAW_WORK") or os.path.join(REPO, "work"), "lists")
 os.makedirs(OUT_DIR, exist_ok=True)
 
 # 大类 -> 叶子编码（索引中法规实际挂载的编码）

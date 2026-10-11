@@ -13,6 +13,7 @@
 | 国家法律法规数据库 [flk.npc.gov.cn](https://flk.npc.gov.cn) | 宪法 · 法律 · 行政法规 · 监察法规 · 地方法规 · 司法解释 — 17,261 current-effective items | Full enumeration via leaf category codes + `sxx=3`; official docx/pdf download |
 | 国家规章库 [gov.cn/gjgzk](https://www.gov.cn/zhengce/xxgk/gjgzk/) | 部门规章 · 地方政府规章 — 10,523 items | Detail-page text extraction with 3-level fallback (standard div → generic CJK paragraphs → search-API content field) |
 | Public mirrors (cross-validation) | lawtext/legal-data-docx (official docx snapshots, sha256-verified), lawtext/regulations, HuggingFace snapshot | Faster than official API when throttled; used for gap-fill and cross-checks |
+| 会计准则与执业准则 (MOF + CICPA) | 企业会计准则 · 政府及行业会计制度 · CPA practice standards — 268 items | Dedicated downloaders for kjs.mof.gov.cn / fgk.mof.gov.cn / CICPA; full doc numbers (文号) recorded |
 | MinerU OCR | scanned PDFs | Official scans → Markdown with quality validation against reference text |
 
 End-to-end result on a full build: **27,784 / 27,784 items (100%)**, each with the original file (docx/pdf/doc) **and** a Markdown version with front matter, plus dedicated folders for tax-related (涉税) and accounting-related (涉会计) laws.
@@ -22,7 +23,7 @@ End-to-end result on a full build: **27,784 / 27,784 items (100%)**, each with t
 ```
 china-law-obtain/
 ├── SKILL.md                 # Full pipeline manual (agent-skill format, also human-readable)
-├── scripts/                 # 19 standalone Python scripts (resumable, idempotent)
+├── scripts/                 # 28 standalone Python scripts (resumable, idempotent, path-portable)
 │   ├── flk_enumerate.py     #   enumerate flk.npc.gov.cn current-effective corpus
 │   ├── govlib.py            #   enumerate gov.cn rules library (self-generated auth key)
 │   ├── flk_download.py      #   official docx/pdf downloads (WAF cookie pool)
@@ -34,6 +35,12 @@ china-law-obtain/
 │   │                        #   repairs: thin content, legacy .doc, garbled text
 │   ├── verify.py            #   4-layer verification (counts/integrity/sampling/cross-mirror)
 │   ├── organize_md.py       #   final library: categorized folders + Markdown + topic folders
+│   ├── kjs_enum.py / kjs_cas_download.py / fgk_search.py / std_gov_acct.py
+│   │                        #   accounting standards (MOF) downloaders
+│   ├── cicpa_enum.py / cicpa_std_download.py / cicpa_guide_supp.py
+│   │                        #   CPA practice standards (CICPA) downloaders
+│   ├── standards_organize.py #  standards library: categorized folders + Markdown + manifest
+│   ├── build_catalog.py     #   multi-dimension catalog index (6 dimensions, agent-friendly)
 │   ├── diff_update.py       #   incremental update diff (new / removed / changed)
 │   ├── mineru_upgrade.py    #   scanned-PDF OCR upgrade (tokens via env, validated)
 │   └── waf_watch.py / xmlfallback.py  # helpers
@@ -41,6 +48,8 @@ china-law-obtain/
 ├── requirements.txt
 └── LICENSE                  # MIT (code only — see data policy)
 ```
+
+**Path conventions** — all scripts locate the repo root relative to their own location; override with `CHINALAW_ROOT` (repo root) or `CHINA_LAW_WORK` (work dir, default `<repo>/work/`). No hardcoded machine paths.
 
 ## Quick start
 
@@ -61,6 +70,7 @@ python $AQ/scripts/gov_download.py 部门规章 4   # 3. download (resumable)
 python $AQ/scripts/flk_download.py 法律 3
 python $AQ/scripts/verify.py all           # 4. verify
 python $AQ/scripts/organize_md.py          # 5. organize + Markdown + topics (-> ../lawlibrary)
+python $AQ/scripts/build_catalog.py        # 6. optional: multi-dimension catalog index (-> ../法规目录索引)
 ```
 
 Incremental update later:
@@ -81,7 +91,9 @@ lawlibrary/
 ├── manifest.csv                       # every item: category / issuer / date / topic / source / dual-format paths / official link
 ├── 国家法律法规数据库/<category>/{原文件, Markdown}/
 ├── 国家规章库/<category>/{原文件, Markdown}/
-└── 专题/{涉税法规, 涉会计法规}/...     # topic copies (keyword-classified, editable list)
+├── 会计准则与执业准则/<三类>/{原文件, Markdown}/   # MOF standards + CICPA practice standards (268 items)
+├── 专题/{涉税法规, 涉会计法规, 税务案例}/...      # topic copies (keyword-classified, editable list)
+└── (平级) 法规目录索引/                              # catalog: 索引总表.csv + 6-dimension Markdown indexes
 ```
 
 ## Highlights (the hard-won parts)

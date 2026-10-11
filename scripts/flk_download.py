@@ -1,10 +1,18 @@
 #!/usr/bin/env python3
+# ============================================================
+# Copyright (c) 2026 Zhu-Guang-Scion <Zhu-Guang-Scion@users.noreply.github.com>
+# China_Law 法规库与税务案例库工具链 · github.com/Zhu-Guang-Scion · 水印 CLAW-ZGS-2026
+# MIT License（见仓库 LICENSE）；数据不入库，仅元数据索引
+# ============================================================
 """flk.npc.gov.cn 多线程批量下载器：现行有效法规官方 docx。
 
 用法: python flk_download.py <category> [workers]
   category: 宪法/法律/行政法规/监察法规/地方法规/司法解释/all
 断点续下：进度存 work/lists/flk_dl_progress_<category>.jsonl (bbbs -> 状态)
 """
+
+__author__ = "Zhu-Guang-Scion"
+__copyright__ = "Copyright (c) 2026 Zhu-Guang-Scion (github.com/Zhu-Guang-Scion), MIT"
 import io
 import json
 import os
@@ -19,7 +27,9 @@ from urllib.parse import unquote
 import requests
 
 BASE = "https://flk.npc.gov.cn"
-ROOT = os.environ.get("CHINA_LAW_WORK") or os.path.join(os.getcwd(), "work")
+REPO = os.environ.get("CHINALAW_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+ROOT = os.environ.get("CHINA_LAW_WORK") or os.path.join(REPO, "work")
 LISTS = os.path.join(ROOT, "lists")
 DL_ROOT = os.path.join(ROOT, "downloads", "flk")
 PROGRESS_DIR = os.path.join(ROOT, "lists")
@@ -238,6 +248,7 @@ class Progress:
         self.path = path
         self.lock = threading.Lock()
         self.data = {}
+        bad = 0
         if os.path.exists(path):
             with open(path, encoding="utf-8") as f:
                 for line in f:
@@ -247,7 +258,10 @@ class Progress:
                             rec = json.loads(line)
                             self.data[rec["bbbs"]] = rec
                         except Exception:
+                            bad += 1
                             continue
+        if bad:
+            log("进度文件 %s 有 %d 行损坏已跳过" % (path, bad))
         self._count = 0
 
     def mark(self, bbbs, **kv):

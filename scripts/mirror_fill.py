@@ -1,10 +1,18 @@
 #!/usr/bin/env python3
+# ============================================================
+# Copyright (c) 2026 Zhu-Guang-Scion <Zhu-Guang-Scion@users.noreply.github.com>
+# China_Law 法规库与税务案例库工具链 · github.com/Zhu-Guang-Scion · 水印 CLAW-ZGS-2026
+# MIT License（见仓库 LICENSE）；数据不入库，仅元数据索引
+# ============================================================
 """用 lawtext 镜像 docx 按 bbbs 补齐 flk 官方下载缺口。
 
 镜像文件名格式: {title}_{gbrq_compact}_{bbbs}.docx  (gbrq 如 20210610)
 输出到 work/downloads/flk/<cat>/，命名与官方下载一致: {flxz}_{title}_{gbrq}_{status}.docx
 进度记录进对应 flk_dl_progress_<cat>.jsonl (source=lawtext)。
 """
+
+__author__ = "Zhu-Guang-Scion"
+__copyright__ = "Copyright (c) 2026 Zhu-Guang-Scion (github.com/Zhu-Guang-Scion), MIT"
 import glob
 import json
 import os
@@ -12,7 +20,9 @@ import re
 import shutil
 import sys
 
-ROOT = os.environ.get("CHINA_LAW_WORK") or os.path.join(os.getcwd(), "work")
+REPO = os.environ.get("CHINALAW_ROOT") or os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+ROOT = os.environ.get("CHINA_LAW_WORK") or os.path.join(REPO, "work")
 LISTS = os.path.join(ROOT, "lists")
 DL_ROOT = os.path.join(ROOT, "downloads", "flk")
 SXX_MAP = {1: "已废止", 2: "已修改", 3: "有效", 4: "尚未生效"}
